@@ -1,6 +1,6 @@
 import json
 from flask import Flask,render_template,request,redirect,flash,url_for
-
+from datetime import datetime
 
 def loadClubs():
     with open('clubs.json') as c:
@@ -12,6 +12,16 @@ def loadCompetitions():
     with open('competitions.json') as comps:
          listOfCompetitions = json.load(comps)['competitions']
          return listOfCompetitions
+
+def set_zero_place_for_past_competition(competitions):
+    """Reset the number of available places for the competition to zero
+    if it has already taken place.
+    """
+    for competition in competitions:
+        date_competition = datetime.strptime(competition["date"], "%Y-%m-%d %H:%M:%S")
+        date_now = datetime.now()
+        if date_competition < date_now:
+            competition["numberOfPlaces"] = 0
 
 
 app = Flask(__name__)
@@ -27,6 +37,7 @@ def index():
 @app.route('/showSummary',methods=['POST'])
 def showSummary():
     club = [club for club in clubs if club['email'] == request.form['email']][0]
+    set_zero_place_for_past_competition(competitions)
     return render_template('welcome.html',club=club,competitions=competitions)
 
 
