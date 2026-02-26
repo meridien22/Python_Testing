@@ -22,19 +22,16 @@ clubs = loadClubs()
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', table_clubs=clubs)
 
 @app.route('/showSummary',methods=['POST'])
 def showSummary():
     club = [club for club in clubs if club['email'] == request.form['email']][0]
-    other_clubs = [club for club in clubs if club['email'] != request.form['email']]
-    print("-------------------------")
-    print(other_clubs)
-    print("-------------------------")
+    table_clubs = [club for club in clubs if club['email'] != request.form['email']]
     return render_template('welcome.html',
                            club=club,
                            competitions=competitions,
-                           other_clubs=other_clubs,
+                           table_clubs=table_clubs,
     )
 
 
@@ -53,10 +50,15 @@ def book(competition,club):
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
+    table_clubs = [club for club in clubs if club['name'] != request.form['club']]
     placesRequired = int(request.form['places'])
-    competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-    flash('Great-booking complete!')
-    return render_template('welcome.html', club=club, competitions=competitions)
+    competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
+    flash(f'Great-booking complete! You have reserved {placesRequired} place(s) for {competition["name"]}.')
+    return render_template('welcome.html',
+                           club=club,
+                           competitions=competitions,
+                           table_clubs=table_clubs,
+    )
 
 
 # TODO: Add route for points display
