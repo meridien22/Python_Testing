@@ -3,6 +3,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Summary | GUDLFT Registration</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 30%;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        caption {
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #d9d9d9;
+        }
+    </style>
 </head>
 <body>
         <h2>Welcome, {{club['email']}} </h2><a href="{{url_for('logout')}}">Logout</a>
@@ -34,16 +60,23 @@
         {% endfor %}
     </ul>
 
-    <h3>Clubs:</h3>
-    <ul>
-        {% for other_club in other_clubs%}
-        <li>
-            {{other_club['name']}}<br />
-            Points available : {{other_club['points']}}
-        </li>
-        <hr />
-        {% endfor %}
-    </ul>
+    <table>
+        <caption>Clubs</caption>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for other_club in other_clubs%}
+                <tr>
+                    <td>{{other_club['name']}}</td>
+                    <td>{{other_club['points']}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 </body>
 </html>
