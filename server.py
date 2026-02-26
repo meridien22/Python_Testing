@@ -31,7 +31,7 @@ clubs = loadClubs()
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', table_clubs=clubs)
 
 @app.route('/showSummary',methods=['POST'])
 def showSummary():
@@ -44,7 +44,13 @@ def showSummary():
         flash("Cet email ne correspond à aucun club.")
         return render_template('index.html')
     set_zero_place_for_past_competition(competitions)
-    return render_template('welcome.html',club=clubToFind,competitions=competitions)
+    table_clubs = [club for club in clubs if club['email'] != request.form['email']]
+    return render_template('welcome.html',
+                           club=clubToFind,
+                           competitions=competitions,
+                           table_clubs=table_clubs,
+    )
+
 
 @app.route('/book/<competition>/<club>')
 def book(competition,club):
@@ -60,6 +66,7 @@ def book(competition,club):
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
+    table_clubs = [club for club in clubs if club['name'] != request.form['club']]
     placesRequired = int(request.form['places'])
     club_points = int(club['points'])
     placeAvailable = int(competition['numberOfPlaces'])
@@ -76,8 +83,13 @@ def purchasePlaces():
     else :
         competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
         club["points"] = int(club["points"]) - placesRequired
-        flash('Great, booking complete!')
-        return render_template('welcome.html', club=club, competitions=competitions)
+        flash(f'Great-booking complete! You have reserved {placesRequired} place(s) for {competition["name"]}.')
+        return render_template('welcome.html',
+                        club=club,
+                        competitions=competitions,
+                        table_clubs=table_clubs,
+        )
+
 # TODO: Add route for points display
 
 @app.route('/logout')

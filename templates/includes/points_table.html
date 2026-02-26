@@ -1,0 +1,45 @@
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 30%;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        caption {
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+            border: 1px solid black;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #d9d9d9;
+        }
+    </style>
+    
+    <table>
+        <caption>Clubs</caption>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for table_club in table_clubs%}
+                <tr>
+                    <td>{{table_club['name']}}</td>
+                    <td>{{table_club['points']}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
