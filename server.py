@@ -80,7 +80,7 @@ def purchasePlaces():
     else :
         competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
         club["points"] = int(club["points"]) - placesRequired
-        flash(f'Great-booking complete! You have reserved {placesRequired} place(s) for {competition["name"]}.')
+        flash(f'Great, booking complete ! You have reserved {placesRequired} place(s) for {competition["name"]}.')
     
     return render_template('welcome.html',
                     club=club,
@@ -88,7 +88,9 @@ def purchasePlaces():
                     table_clubs=table_clubs,
     )
 
-# TODO: Add route for points display
+@app.route('/points')
+def points():
+    return render_template('points.html', table_clubs=clubs)
 
 @app.route('/logout')
 def logout():

@@ -2,7 +2,11 @@ import server
 from tests.conftest import client
 
 def test_update_point(client):
-    server.clubs = [{"name": "Test club", "points": "4"}]
+    server.clubs = [{
+        "name": "Test club",
+        "points": "4",
+        "email": "john@simplylift.co",
+    }]
     server.competitions = [{"name": "Test competition", "numberOfPlaces": "5"}]
 
     response = client.post('/purchasePlaces', data={

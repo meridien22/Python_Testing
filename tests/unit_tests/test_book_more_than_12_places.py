@@ -3,7 +3,11 @@ from tests.conftest import client
 import html
 
 def test_book_less_than_12_places(client):
-    server.clubs = [{"name": "Test club", "points": "25"}]
+    server.clubs = [{
+        "name": "Test club",
+        "points": "25",
+        "email": "john@simplylift.co",
+    }]
     server.competitions = [{"name": "Test competition", "numberOfPlaces": "25"}]
 
     response = client.post('/purchasePlaces', data={
@@ -13,7 +17,7 @@ def test_book_less_than_12_places(client):
     })
 
     assert response.status_code == 200
-    assert b"Great, booking complete!" in response.data
+    assert b"Great, booking complete !" in response.data
     assert int(server.competitions[0]['numberOfPlaces']) == 15
 
 def test_book_more_than_12_places(client):

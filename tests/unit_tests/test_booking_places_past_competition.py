@@ -2,6 +2,11 @@ import server
 from tests.conftest import client
 
 def test_book_not_past_competition(client):
+    server.clubs = [{
+        "name": "Test club",
+        "points": "4",
+        "email": "john@simplylift.co",
+    }]
     server.competitions = [{
         "name": "Test competition",
         "numberOfPlaces": "5",
@@ -12,6 +17,11 @@ def test_book_not_past_competition(client):
     assert b'Book Places' in response.data
 
 def test_book_past_competition(client):
+    server.clubs = [{
+        "name": "Test club",
+        "points": "4",
+        "email": "john@simplylift.co",
+    }]
     server.competitions = [{
         "name": "Test competition",
         "numberOfPlaces": "5",
