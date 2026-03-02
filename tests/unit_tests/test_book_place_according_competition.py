@@ -3,6 +3,7 @@ from tests.conftest import client
 import html
 
 def test_book_places_with_enough_place_competition(client):
+    """Test to reserve a number of places compatible with the number of places available for the competition."""
     server.clubs = [{
         "name": "Test club",
         "points": "4",
@@ -21,6 +22,7 @@ def test_book_places_with_enough_place_competition(client):
     assert int(server.competitions[0]['numberOfPlaces']) == 1
 
 def test_book_places_without_enough_place_competition(client):
+    """Test of reservation of a number of places incompatible with the number of places available for the competition."""
     server.clubs = [{"name": "Test club", "points": "4"}]
     server.competitions = [{"name": "Test competition", "numberOfPlaces": "5"}]
 

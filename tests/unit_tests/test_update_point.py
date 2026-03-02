@@ -2,6 +2,7 @@ import server
 from tests.conftest import client
 
 def test_update_point(client):
+    """Testing the update of a club's points after a place reservation."""
     server.clubs = [{
         "name": "Test club",
         "points": "4",

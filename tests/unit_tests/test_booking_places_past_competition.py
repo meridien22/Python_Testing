@@ -2,6 +2,7 @@ import server
 from tests.conftest import client
 
 def test_book_not_past_competition(client):
+    """Test to reserve a place for an upcoming competition."""
     server.clubs = [{
         "name": "Test club",
         "points": "4",
@@ -17,6 +18,7 @@ def test_book_not_past_competition(client):
     assert b'Book Places' in response.data
 
 def test_book_past_competition(client):
+    """Test to reserve a place for a past competition."""
     server.clubs = [{
         "name": "Test club",
         "points": "4",
