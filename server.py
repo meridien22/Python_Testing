@@ -42,7 +42,7 @@ def showSummary():
             clubToFind = club
     if clubToFind is None:
         flash("Cet email ne correspond à aucun club.")
-        return render_template('index.html')
+        return render_template('index.html', table_clubs=clubs)
     set_zero_place_for_past_competition(competitions)
     table_clubs = [club for club in clubs if club['email'] != request.form['email']]
     return render_template('welcome.html',
